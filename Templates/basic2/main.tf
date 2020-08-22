@@ -16,6 +16,6 @@ module "vnet" {
 
   tags = {
     environment = "dev"
-    costcenter  = "it"
+    costcenter  = "dhe"
   }
 }
