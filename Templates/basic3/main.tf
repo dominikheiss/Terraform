@@ -1,41 +1,29 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "~>1.31"
-    }
-  }
+# Create a resource group for core
+resource "azurerm_resource_group" "main-rg" {
+  name = "main-rg"
+  location = "west europe"
 }
 
-# Configure the Microsoft Azure Provider.
-provider "azurerm" {}
-
-# Create a resource group
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-general-dhe"
-  location = "West Europe"
+# Create the core VNET
+resource "azurerm_virtual_network" "main-vnet" {
+  name = "main-vnet"
+  address_space = "10.100.0.0/16"
+  resource_group_name = azurerm_resource_group.main-rg.name
+  location = azurerm_resource_group.main-rg.location
 }
 
-# Create virtual network
-resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet_main"
-  address_space       = ["10.100.0.0/16"]
-  location            = "West Europe"
-  resource_group_name = azurerm_resource_group.rg.name
+# Create a subnet for Azure Firewall
+resource "azurerm_subnet" "Server" {
+  name = "Server" # mandatory name -do not rename-
+  address_prefixes = "10.10.1.0/24"
+  virtual_network_name = azurerm_virtual_network.main-vnet.name
+  resource_group_name = azurerm_resource_group.main-rg.name
 }
 
-# Create subnet
-resource "azurerm_subnet" "subnet" {
-  name                 = "Server"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  subnet_prefix     = ["10.100.1.0/24"]
-}
-
-# Create subnet
-resource "azurerm_subnet" "subnet2" {
-  name                 = "WVD"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  subnet_prefix     = ["10.100.10.0/24"]
+# Create a subnet for Azure Firewall
+resource "azurerm_subnet" "WVD" {
+  name = "WVD" # mandatory name -do not rename-
+  address_prefixes = "10.10.10.0/24"
+  virtual_network_name = azurerm_virtual_network.main-vnet.name
+  resource_group_name = azurerm_resource_group.main-rg.name
 }
