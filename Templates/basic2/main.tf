@@ -2,10 +2,10 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg-general-dhe" {
-  name     = "rg-general-dhe"
-  location = "West Europe"
-}
+#resource "azurerm_resource_group" "rg-general-dhe" {
+#  name     = "rg-general-dhe"
+#  location = "West Europe"
+#}
 
 module "vnet" {
   source              = "Azure/vnet/azurerm"
