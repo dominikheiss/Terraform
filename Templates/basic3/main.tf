@@ -3,10 +3,10 @@ provider "azurerm" {
 }
 
 # Create a resource group for core
-#resource "azurerm_resource_group" "rg_main" {
-#  name = "rg_main"
-#  location = "west europe"
-#}
+resource "azurerm_resource_group" "rg_main" {
+  name = "rg_main"
+  location = "west europe"
+}
 
 # Create the  VNET
 resource "azurerm_virtual_network" "vnet_main" {
