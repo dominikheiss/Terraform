@@ -4,8 +4,8 @@ provider "azurerm" {
 
 # Create a resource group
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-var.prefix"
-  location = "var.location"
+  name     = "rg-{var.prefix}"
+  location = "{var.location}"
 }
 
 # Create the  VNET
