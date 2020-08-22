@@ -81,6 +81,9 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic-veeam.id]
   vm_size               = "Standard_E2as_v4"
+
+##### Marketplace image details again
+
 	plan {
 	name= "veeamoffice365backup"
 	publisher= "veeam"
@@ -124,5 +127,29 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   }
   tags = {
     environment = "staging"
+  }
+}
+
+##### Create Azure Bastion Host
+
+resource "azurerm_public_ip" "bastion-ip" {
+  name                = "bastion-ip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+##### Config Bastion Host
+
+resource "azurerm_bastion_host" "bastionhost" {
+  name                = "Veeam Bastion Host"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                 = "configuration"
+    subnet_id            = azurerm_subnet.AzureBastionSubnet.id
+    public_ip_address_id = azurerm_public_ip.bastion-ip.id
   }
 }
