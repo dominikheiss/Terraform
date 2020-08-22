@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "main-rg" {
 # Create the core VNET
 resource "azurerm_virtual_network" "main-vnet" {
   name = "main-vnet"
-  address_space = "10.100.0.0/16"
+  address_space = ["10.100.0.0/16"]
   resource_group_name = azurerm_resource_group.main-rg.name
   location = azurerm_resource_group.main-rg.location
 }
@@ -19,7 +19,7 @@ resource "azurerm_virtual_network" "main-vnet" {
 # Create a subnet for Azure Firewall
 resource "azurerm_subnet" "Server" {
   name = "Server" # mandatory name -do not rename-
-  address_prefixes = "10.100.1.0/24"
+  address_prefixes = ["10.100.1.0/24"]
   virtual_network_name = azurerm_virtual_network.main-vnet.name
   resource_group_name = azurerm_resource_group.main-rg.name
 }
@@ -27,7 +27,7 @@ resource "azurerm_subnet" "Server" {
 # Create a subnet for Azure Firewall
 resource "azurerm_subnet" "WVD" {
   name = "WVD" # mandatory name -do not rename-
-  address_prefixes = "10.100.10.0/24"
+  address_prefixes = ["10.100.10.0/24"]
   virtual_network_name = azurerm_virtual_network.main-vnet.name
   resource_group_name = azurerm_resource_group.main-rg.name
 }
