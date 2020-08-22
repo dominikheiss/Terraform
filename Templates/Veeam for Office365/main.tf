@@ -100,6 +100,7 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   }
   os_profile_windows_config {
     enable_automatic_upgrades = false
+	provision_vm_agent = true
   }
   tags = {
     environment = "staging"
