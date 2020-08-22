@@ -2,8 +2,6 @@ provider "azurerm" {
   features {}
 }
 
-terraform import azurerm_resource_group.rg_main /subscriptions/7e6721ba-af2a-43d0-a91c-44a181da888c/resourceGroups/rg_main
-
 # Create a resource group for core
 resource "azurerm_resource_group" "rg_main" {
   name = "rg_main"
