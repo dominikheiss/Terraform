@@ -1,3 +1,3 @@
 ## Example: Virtual Network
 
-This example provisions a Virtual Network containing a single Subnet.
+This template provisions a Ressource Group and a Virtual Network containing some Subnets.
