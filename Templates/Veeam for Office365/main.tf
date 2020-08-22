@@ -9,6 +9,11 @@ resource "azurerm_resource_group" "rg" {
   location 					= var.location
 }
 
+##### Use existing resource group 
+#data "azurerm_resource_group" "gepgroup1" {
+#    name     = "NexxeNeo4j-rg"
+#}
+
 ##### Create the VNET
 
 resource "azurerm_virtual_network" "vnet" {
@@ -68,18 +73,27 @@ resource "azurerm_network_interface" "nic-veeam" {
   }
 }
 
+##### Create a VM
+
 resource "azurerm_virtual_machine" "vm-veeam" {
   name                  = "${var.prefix}-VeeamO365"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic-veeam.id]
   vm_size               = "Standard_E2as_v4"
-
+	plan {
+	name= "veeamoffice365backup"
+	publisher= "veeam"
+	product= "office365backup"
+  }
+	
   # Uncomment this line to delete the OS disk automatically when deleting the VM
   # delete_os_disk_on_termination = true
 
   # Uncomment this line to delete the data disks automatically when deleting the VM
   # delete_data_disks_on_termination = true
+
+##### Select the IMAGE from the marketplace (az vm image list --output table --all --publisher Veeam)
 
   storage_image_reference {
     publisher = "veeam"
@@ -87,12 +101,18 @@ resource "azurerm_virtual_machine" "vm-veeam" {
     sku       = "veeamoffice365backup"
     version   = "4.0.2"
   }
+  
+##### VM Disk preferences
+  
   storage_os_disk {
     name              = "veeamo365disk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
   }
+  
+##### Password
+  
   os_profile {
     computer_name  = "VeeamO365"
     admin_username = "Bechtle-adm"
