@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg_main" {
-  name     = "my-resources"
+  name     = "rg_main"
   location = "West Europe"
 }
 
