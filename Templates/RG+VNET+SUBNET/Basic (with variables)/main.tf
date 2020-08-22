@@ -5,14 +5,14 @@ provider "azurerm" {
 ##### Create a resource group
 
 resource "azurerm_resource_group" "rg" {
-  name     				= "RG-${var.prefix}"
+  name     				= "${var.prefix}-RG1"
   location 				= var.location
 }
 
 ##### Create the VNET
 
 resource "azurerm_virtual_network" "vnet" {
-  name                	= "$VNET-{var.prefix}"
+  name                	= "${var.prefix}-VNET"
   address_space 		= ["10.100.0.0/16"]
   resource_group_name 	= azurerm_resource_group.rg.name
   location 				= azurerm_resource_group.rg.location
