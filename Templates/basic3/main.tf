@@ -1,3 +1,7 @@
+provider "azurerm" {
+  features {}
+}
+
 # Create a resource group for core
 resource "azurerm_resource_group" "main-rg" {
   name = "main-rg"
