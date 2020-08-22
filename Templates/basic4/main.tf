@@ -6,7 +6,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     				= "RG-${var.prefix}"
-  location 				= "${var.location}"
+  location 				= var.location
 }
 
 ##### Create the VNET
