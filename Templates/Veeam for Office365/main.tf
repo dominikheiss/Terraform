@@ -98,6 +98,9 @@ resource "azurerm_virtual_machine" "vm-veeam" {
     admin_username = "Bechtle-adm"
     admin_password = "Bechtle123!"
   }
+  os_profile_windows_config {
+    enable_automatic_upgrades = false
+  }
   tags = {
     environment = "staging"
   }
