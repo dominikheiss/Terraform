@@ -2,7 +2,7 @@ provider "azurerm" {
   features {}
 }
 
-# Create a resource group for core
+# Create a resource group
 resource "azurerm_resource_group" "rg_main" {
   name = "rg_main"
   location = "west europe"
@@ -32,7 +32,7 @@ resource "azurerm_subnet" "WVD" {
   resource_group_name = azurerm_resource_group.rg_main.name
 }
 
-# Create a subnet for Azure Bastion
+# Create a subnet for Azure Bastion Host
 resource "azurerm_subnet" "AzureBastionSubnet" {
   name = "AzureBastionSubnet" 
   address_prefixes = ["10.100.254.0/24"]
@@ -40,7 +40,7 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
   resource_group_name = azurerm_resource_group.rg_main.name
 }
 
-# Create a subnet for Site 2 Site VPN
+# Create a subnet for VPN Gateway
 resource "azurerm_subnet" "Gateway" {
   name = "Gateway" 
   address_prefixes = ["10.100.255.0/24"]
