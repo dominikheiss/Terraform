@@ -91,7 +91,7 @@ resource "azurerm_network_security_group" "nsg" {
     destination_address_prefix = "*"
   }
   security_rule {
-    name                       = "Outbound to Internet"
+    name                       = "Outbound_to_Internet"
     priority                   = 100
     direction                  = "Outbound"
     access                     = "Allow"
