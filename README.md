@@ -1,5 +1,7 @@
 # Bechtle-Terraform for Azure/o365
 
+==> Azure Cloud Shell
+
 1. git clone https://github.com/dominikheiss/Bechtle-Terraform.git
 
 2. cd Bechtle-Terraform/Templates/xxx
