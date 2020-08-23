@@ -62,6 +62,8 @@ resource "azurerm_subnet" "Gateway" {
   resource_group_name 	= azurerm_resource_group.rg.name
 }
 
+##### Create a Public IP
+
 resource "azurerm_public_ip" "publicIP" {
   name                = "${var.prefix}-Public-IP"
   location            = azurerm_resource_group.rg.location
@@ -73,6 +75,8 @@ resource "azurerm_public_ip" "publicIP" {
     application = "Security"
   } 
 }
+
+##### Create a Network Security Group
 
 resource "azurerm_network_security_group" "nsg" {
   name                = "NSG1"
@@ -126,6 +130,8 @@ resource "azurerm_network_interface" "nic-veeam" {
 	public_ip_address_id 			= azurerm_public_ip.publicIP.id
   }
 }
+
+##### Assign NSG to NIC
 
 resource "azurerm_network_interface_security_group_association" "nsgassociation" {
   network_interface_id      = azurerm_network_interface.nic-veeam.id
