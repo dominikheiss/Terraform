@@ -25,6 +25,17 @@ resource "azuread_application" "veeamapp" {
   }
 }
 
+resource "random_string" "not_so_secret_anymore" {
+  length  = 33
+  special = true
+}
+
+resource "azuread_application_password" "clientsecret" {
+  application_id = azuread_application.veeamapp.id
+  value          = random_string.not_so_secret_anymore.result
+  end_date       = "2099-01-01T01:02:03Z"
+}
+
 
 output "azure_ad_object_id" {
   value = azuread_application.veeamapp.id
