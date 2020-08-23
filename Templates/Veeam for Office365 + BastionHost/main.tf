@@ -137,9 +137,6 @@ resource "azurerm_virtual_machine" "vm-veeam" {
 	provision_vm_agent 			= true
 	timezone					= "W. Europe Standard Time"
   }
-  tags = {
-    environment = "staging"
-  }
 }
 
 ##### Create Azure Bastion Host
