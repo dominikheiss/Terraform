@@ -7,12 +7,11 @@ provider "azurerm" {
 resource "azurerm_resource_group" "rg" {
   name     					= "${var.prefix}-RG1"
   location 					= var.location
+  tags = {
+    environment = "IT"
+    application = "Veeam Backup"
+  } 
 }
-
-##### Use existing resource group 
-#data "azurerm_resource_group" "gepgroup1" {
-#    name     = "NexxeNeo4j-rg"
-#}
 
 ##### Create the VNET
 
@@ -21,6 +20,10 @@ resource "azurerm_virtual_network" "vnet" {
   address_space 		= ["10.100.0.0/16"]
   resource_group_name 	= azurerm_resource_group.rg.name
   location 				= azurerm_resource_group.rg.location
+  tags = {
+    environment = "IT"
+    application = "Network"
+  } 
 }
 
 ##### Create a subnet for Azure Servers
@@ -65,6 +68,10 @@ resource "azurerm_network_interface" "nic-veeam" {
   name                = "${var.prefix}-VeeamNIC"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  tags = {
+    environment = "IT"
+    application = "Veeam Backup"
+  } 
 
   ip_configuration {
     name                          = "testconfiguration1"
@@ -81,6 +88,10 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic-veeam.id]
   vm_size               = "Standard_E2as_v4"
+  tags = {
+    environment = "IT"
+    application = "Veeam Backup"
+  } 
 
 ##### Marketplace image details again
 
@@ -139,6 +150,10 @@ resource "azurerm_public_ip" "bastion-ip" {
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  tags = {
+    environment = "IT"
+    application = "Security"
+  } 
 }
 
 ##### Config Bastion Host
@@ -147,6 +162,10 @@ resource "azurerm_bastion_host" "bastionhost" {
   name                = "VeeamBastionHost"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  tags = {
+    environment = "IT"
+    application = "Security"
+  } 
 
   ip_configuration {
     name                 = "configuration"
