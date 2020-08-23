@@ -40,13 +40,11 @@ resource "azuread_application" "veeamapp" {
 #output "azure_ad_object_id" {
 #  value = data.azuread_application.veeamapp.id
 #}
-  oauth2_permissions {
-    admin_consent_description  = "Allow the application to access example on behalf of the signed-in user."
-    admin_consent_display_name = "Access example"
-    is_enabled                 = true
-    type                       = "User"
-    user_consent_description   = "Allow the application to access example on your behalf."
-    user_consent_display_name  = "Access example"
-    value                      = "user_impersonation"
+
+
+  # Holy crap, shell out to do this?!
+  provisioner "local-exec" {
+    command = "az ad app permission admin-consent --id ${azuread_application.server.application_id}"
   }
+
 
