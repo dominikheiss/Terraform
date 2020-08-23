@@ -41,10 +41,12 @@ resource "azuread_application" "veeamapp" {
 #  value = data.azuread_application.veeamapp.id
 #}
   oauth2_permissions {
-    admin_consent_description  = "Administer the example application"
-    admin_consent_display_name = "Administer"
+    admin_consent_description  = "Allow the application to access example on behalf of the signed-in user."
+    admin_consent_display_name = "Access example"
     is_enabled                 = true
-    type                       = "Admin"
-    value                      = "administer"
+    type                       = "User"
+    user_consent_description   = "Allow the application to access example on your behalf."
+    user_consent_display_name  = "Access example"
+    value                      = "user_impersonation"
   }
 
