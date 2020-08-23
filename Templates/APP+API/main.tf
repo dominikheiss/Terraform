@@ -27,7 +27,7 @@ resource "azuread_application" "veeamapp" {
 
 
 output "azure_ad_object_id" {
-  value = data.azuread_application.veeamapp.id
+  value = azuread_application.veeamapp.id
 }
 
 /*
