@@ -127,6 +127,11 @@ resource "azurerm_network_interface" "nic-veeam" {
   }
 }
 
+resource "azurerm_network_interface_security_group_association" "nsgassociation" {
+  network_interface_id      = azurerm_network_interface.nic-veeam.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
 ##### Create a VM
 
 resource "azurerm_virtual_machine" "vm-veeam" {
@@ -135,7 +140,6 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic-veeam.id]
   vm_size               = "Standard_E2as_v4"
-  network_security_group_id = azurerm_network_security_group.nsg.id  
   tags = {
     environment = "IT"
     application = "Veeam Backup"
