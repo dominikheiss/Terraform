@@ -25,18 +25,18 @@ terraform import azurerm_resource_group.rg /subscriptions/7e6721ba-af2a-43d0-a91
 
 
 
-## To Remove a directory in Azure Cloud Shell && reclone the GIT Repo:
+### To Remove a directory in Azure Cloud Shell && reclone the GIT Repo:
 
 cd ~ && rm -R -f  terraform-azure && git clone https://github.com/dominikheiss/Bechtle-Terraform.git
 
 
 
-## To rejoin the last directory & init & apply
+### To rejoin the last directory & init & apply
 
 cd Bechtle-Terraform/Templates/xxx && terraform init && terraform apply
 
 
 
-## To get Azure Marketplace Images Details
+### To get Azure Marketplace Images Details
 
 az vm image list --output table --all --publisher Veeam
