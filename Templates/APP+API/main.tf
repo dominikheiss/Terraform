@@ -41,11 +41,18 @@ resource "azuread_application" "veeamapp" {
 #  value = data.azuread_application.veeamapp.id
 #}
 
-
+resource "null_resource" "delay_before_consent" {
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+}
 resource "null_resource" "grant_srv_admin_constent" {
   provisioner "local-exec" {
     command = "az ad app permission admin-consent --id ${azuread_application.veeamapp.application_id}"
   }
+  depends_on = [
+    null_resource.delay_before_consent
+  ]
 }
 
 
