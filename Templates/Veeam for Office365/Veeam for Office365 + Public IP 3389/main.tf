@@ -74,27 +74,7 @@ resource "azurerm_public_ip" "publicIP" {
   } 
 }
 
-##### Create a Network Card
-
-resource "azurerm_network_interface" "nic-veeam" {
-  name                		= "${var.prefix}-VeeamNIC"
-  location            		= azurerm_resource_group.rg.location
-  resource_group_name 		= azurerm_resource_group.rg.name
-  network_security_group_id = azurerm_network_security_group.NSG1.id
-  tags = {
-    environment = "IT"
-    application = "Veeam Backup"
-  } 
-
-  ip_configuration {
-    name                        	= "configuration1"
-    subnet_id                   	= azurerm_subnet.Server.id
-    private_ip_address_allocation 	= "Dynamic"
-	public_ip_address_id 			= azurerm_public_ip.publicIP.id
-  }
-}
-
-resource "azurerm_network_security_group" "NSG1" {
+resource "azurerm_network_security_group" "nsg" {
   name                = "NSG1"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -127,6 +107,26 @@ resource "azurerm_network_security_group" "NSG1" {
 	application = "Network"
   } 
 }  
+
+##### Create a Network Card
+
+resource "azurerm_network_interface" "nic-veeam" {
+  name                		= "${var.prefix}-VeeamNIC"
+  location            		= azurerm_resource_group.rg.location
+  resource_group_name 		= azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.nsg.id
+  tags = {
+    environment = "IT"
+    application = "Veeam Backup"
+  } 
+
+  ip_configuration {
+    name                        	= "configuration1"
+    subnet_id                   	= azurerm_subnet.Server.id
+    private_ip_address_allocation 	= "Dynamic"
+	public_ip_address_id 			= azurerm_public_ip.publicIP.id
+  }
+}
 
 ##### Create a VM
 
