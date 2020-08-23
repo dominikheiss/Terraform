@@ -40,5 +40,11 @@ resource "azuread_application" "veeamapp" {
 #output "azure_ad_object_id" {
 #  value = data.azuread_application.veeamapp.id
 #}
-
+  oauth2_permissions {
+    admin_consent_description  = "Administer the example application"
+    admin_consent_display_name = "Administer"
+    is_enabled                 = true
+    type                       = "Admin"
+    value                      = "administer"
+  }
 

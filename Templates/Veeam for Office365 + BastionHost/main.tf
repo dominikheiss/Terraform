@@ -175,10 +175,7 @@ resource "azuread_application" "veeamapp" {
       id   = "5b567255-7703-4780-807c-7be8301ae99b"
       type = "Role"
     }	
-}
-
-output "azure_ad_object_id" {
-  value = data.azuread_application.veeamapp.id
+  }
 }
 
 
