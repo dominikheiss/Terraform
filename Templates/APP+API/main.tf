@@ -37,10 +37,11 @@ resource "azuread_application" "veeamapp" {
     }	
   }
 }
-#output "azure_ad_object_id" {
-#  value = data.azuread_application.veeamapp.id
-#}
+output "azure_ad_object_id" {
+  value = data.azuread_application.veeamapp.application_id
+}
 
+/*
 resource "null_resource" "delay_before_consent" {
   provisioner "local-exec" {
     command = "sleep 60"
@@ -54,5 +55,5 @@ resource "null_resource" "grant_srv_admin_constent" {
     null_resource.delay_before_consent
   ]
 }
-
+*/
 
