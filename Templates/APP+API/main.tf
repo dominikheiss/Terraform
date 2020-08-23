@@ -43,7 +43,7 @@ output "azure_ad_object_id" {
 }
 
 output "application_object_id" {
-  value = azuread_application.clientsecret.id
+  value = azuread_application.clientsecret.value
 }
 
 
