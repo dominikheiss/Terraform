@@ -77,9 +77,10 @@ resource "azurerm_public_ip" "publicIP" {
 ##### Create a Network Card
 
 resource "azurerm_network_interface" "nic-veeam" {
-  name                = "${var.prefix}-VeeamNIC"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  name                		= "${var.prefix}-VeeamNIC"
+  location            		= azurerm_resource_group.rg.location
+  resource_group_name 		= azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.NSG1.id
   tags = {
     environment = "IT"
     application = "Veeam Backup"
@@ -92,6 +93,40 @@ resource "azurerm_network_interface" "nic-veeam" {
 	public_ip_address_id 			= azurerm_public_ip.publicIP.id
   }
 }
+
+resource "azurerm_network_security_group" "NSG1" {
+  name                = "NSG1"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  security_rule {
+    name                       = "RDP"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3389"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+  security_rule {
+    name                       = "Outbound to Internet"
+    priority                   = 100
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+  tags = {
+    environment = "IT"
+    application = "Security"
+	application = "Network"
+  } 
+}  
 
 ##### Create a VM
 
