@@ -2,7 +2,7 @@
 
 1. git clone https://github.com/dominikheiss/Bechtle-Terraform.git
 
-2. cd Bechtle-Terraform/xxx
+2. cd Bechtle-Terraform/Templates/xxx
 
 3. terraform init
 
