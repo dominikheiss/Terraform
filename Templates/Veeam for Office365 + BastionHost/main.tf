@@ -155,7 +155,7 @@ resource "azurerm_bastion_host" "bastionhost" {
   }
 }
 
-##### Create Veeam APP for Modern Authentication
+##### Create Veeam APP for Modern Authentication (ADMIN CONSENT PER GUI SETZEN)
 
 resource "azuread_application" "veeamapp" {
   name = "VeeamAPP"

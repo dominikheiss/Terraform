@@ -2,19 +2,6 @@ provider "azurerm" {
   features {}
 }
 
-##### Create a resource group
-
-#resource "azurerm_resource_group" "rg" {
-#  name     					= "${var.prefix}-RG1"
-#  location 					= var.location
-#}
-
-##### Use existing resource group 
-#data "azurerm_resource_group" "gepgroup1" {
-#    name     = "NexxeNeo4j-rg"
-#}
-
-
 ##### Create Veeam APP for Modern Authentication
 
 resource "azuread_application" "veeamapp" {
@@ -37,9 +24,11 @@ resource "azuread_application" "veeamapp" {
     }	
   }
 }
-output "azure_ad_object_id" {
-  value = data.azuread_application.veeamapp.application_id
-}
+
+
+#output "azure_ad_object_id" {
+#  value = data.azuread_application.veeamapp.application_id
+#}
 
 /*
 resource "null_resource" "delay_before_consent" {
