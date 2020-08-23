@@ -215,3 +215,4 @@ output "azure_ad_object_id" {
 output "client_secret" {
   description = "Client Secret"
   value       = random_string.password.result
+}
