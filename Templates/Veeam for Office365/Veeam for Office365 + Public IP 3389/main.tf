@@ -62,6 +62,18 @@ resource "azurerm_subnet" "Gateway" {
   resource_group_name 	= azurerm_resource_group.rg.name
 }
 
+resource "azurerm_public_ip" "publicIP" {
+  name                = "public-ip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  tags = {
+    environment = "IT"
+    application = "Security"
+  } 
+}
+
 ##### Create a Network Card
 
 resource "azurerm_network_interface" "nic-veeam" {
@@ -74,9 +86,10 @@ resource "azurerm_network_interface" "nic-veeam" {
   } 
 
   ip_configuration {
-    name                          = "testconfiguration1"
-    subnet_id                     = azurerm_subnet.Server.id
-    private_ip_address_allocation = "Dynamic"
+    name                        	= "configuration1"
+    subnet_id                   	= azurerm_subnet.Server.id
+    private_ip_address_allocation 	= "Dynamic"
+	public_ip_address_id 			= azurerm_public_ip.publicIP.id
   }
 }
 
@@ -125,7 +138,7 @@ resource "azurerm_virtual_machine" "vm-veeam" {
     managed_disk_type = "Premium_LRS"
   }
   
-##### Password
+##### Password creation
   
   os_profile {
     computer_name  = "VeeamO365"
@@ -136,38 +149,6 @@ resource "azurerm_virtual_machine" "vm-veeam" {
     enable_automatic_upgrades 	= false
 	provision_vm_agent 			= true
 	timezone					= "W. Europe Standard Time"
-  }
-}
-
-##### Create Azure Bastion Host
-
-resource "azurerm_public_ip" "bastion-ip" {
-  name                = "bastion-ip"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Static"
-  sku                 = "Standard"
-  tags = {
-    environment = "IT"
-    application = "Security"
-  } 
-}
-
-##### Config Bastion Host
-
-resource "azurerm_bastion_host" "bastionhost" {
-  name                = "VeeamBastionHost"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  tags = {
-    environment = "IT"
-    application = "Security"
-  } 
-
-  ip_configuration {
-    name                 = "configuration"
-    subnet_id            = azurerm_subnet.AzureBastionSubnet.id
-    public_ip_address_id = azurerm_public_ip.bastion-ip.id
   }
 }
 
