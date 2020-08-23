@@ -63,7 +63,7 @@ resource "azurerm_subnet" "Gateway" {
 }
 
 resource "azurerm_public_ip" "publicIP" {
-  name                = "public-ip"
+  name                = "${var.prefix}-Public-IP"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
