@@ -42,7 +42,7 @@ output "azure_ad_object_id" {
   value = azuread_application.veeamapp.id
 }
 
-output "azuread_application_password" {
+output "application_object_id" {
   value = azuread_application.clientsecret.id
 }
 
