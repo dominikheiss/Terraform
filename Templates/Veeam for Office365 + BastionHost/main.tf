@@ -144,7 +144,7 @@ resource "azurerm_public_ip" "bastion-ip" {
 ##### Config Bastion Host
 
 resource "azurerm_bastion_host" "bastionhost" {
-  name                = "Veeam Bastion Host"
+  name                = "VeeamBastionHost"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
