@@ -171,7 +171,7 @@ resource "azurerm_virtual_machine" "vm-veeam" {
 ##### VM Disk preferences
   
   storage_os_disk {
-    name              = "${var.prefix}-veeamo365disk"
+    name              = "${var.prefix}-Veeamo365Disk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
