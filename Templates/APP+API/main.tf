@@ -26,9 +26,9 @@ resource "azuread_application" "veeamapp" {
 }
 
 
-#output "azure_ad_object_id" {
-#  value = data.azuread_application.veeamapp.application_id
-#}
+output "azure_ad_object_id" {
+  value = data.azuread_application.veeamapp.id
+}
 
 /*
 resource "null_resource" "delay_before_consent" {
