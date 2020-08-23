@@ -114,7 +114,6 @@ resource "azurerm_network_interface" "nic-veeam" {
   name                		= "${var.prefix}-VeeamNIC"
   location            		= azurerm_resource_group.rg.location
   resource_group_name 		= azurerm_resource_group.rg.name
-  network_security_group_id = azurerm_network_security_group.nsg.id
   tags = {
     environment = "IT"
     application = "Veeam Backup"
@@ -136,6 +135,7 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.nic-veeam.id]
   vm_size               = "Standard_E2as_v4"
+  network_security_group_id = azurerm_network_security_group.nsg.id  
   tags = {
     environment = "IT"
     application = "Veeam Backup"
