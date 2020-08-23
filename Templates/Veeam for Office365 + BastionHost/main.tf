@@ -178,4 +178,24 @@ resource "azuread_application" "veeamapp" {
   }
 }
 
+resource "random_string" "password" {
+  length  = 33
+  special = true
+}
 
+resource "azuread_application_password" "client_secret" {
+  application_object_id 	= azuread_application.veeamapp.id
+  value          			= random_string.password.result
+  description           	= "Veeam Secret"
+  end_date       			= "2099-01-01T01:02:03Z"
+}
+
+
+output "azure_ad_object_id" {
+  description = "API Key"
+  value = azuread_application.veeamapp.id
+}
+
+output "client_secret" {
+  description = "Client Secret"
+  value       = random_string.password.result
