@@ -30,7 +30,7 @@ resource "random_string" "password" {
   special = true
 }
 
-resource "azuread_application_password" "clientsecret" {
+resource "azuread_application_password" "client_secret" {
   application_object_id 	= azuread_application.veeamapp.id
   value          			= random_string.password.result
   description           	= "Veeam Secret"
