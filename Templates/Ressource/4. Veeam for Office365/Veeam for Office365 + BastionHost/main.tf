@@ -5,8 +5,8 @@ provider "azurerm" {
 ##### Create a resource group
 
 resource "azurerm_resource_group" "rg" {
-  name     					                = "${var.prefix}-RG1"
-  location 					                = var.location
+  name     					        = "${var.prefix}-RG1"
+  location 					        = var.location
   tags = {
     environment                     = "IT"
     application                     = "Veeam Backup"
@@ -17,9 +17,9 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                	            = "${var.prefix}-VNET1"
-  address_space 		                = ["10.100.0.0/16"]
+  address_space 		            = ["10.100.0.0/16"]
   resource_group_name 	            = azurerm_resource_group.rg.name
-  location 				                  = azurerm_resource_group.rg.location
+  location 				            = azurerm_resource_group.rg.location
   tags = {
     environment                     = "IT"
     application                     = "Network"
@@ -47,8 +47,8 @@ resource "azurerm_subnet" "WVD" {
 ##### Create a subnet for Azure Bastion Host
 
 resource "azurerm_subnet" "AzureBastionSubnet" {
-  name 					                    = "AzureBastionSubnet" 
-  address_prefixes 		              = ["10.100.254.0/24"]
+  name 					            = "AzureBastionSubnet" 
+  address_prefixes 		            = ["10.100.254.0/24"]
   virtual_network_name 	            = azurerm_virtual_network.vnet.name
   resource_group_name 	            = azurerm_resource_group.rg.name
 }
@@ -56,8 +56,8 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
 ##### Create a subnet for VPN Gateway
 
 resource "azurerm_subnet" "Gateway" {
-  name 					                    = "Gateway" 
-  address_prefixes 		              = ["10.100.255.0/24"]
+  name 					            = "Gateway" 
+  address_prefixes 		            = ["10.100.255.0/24"]
   virtual_network_name 	            = azurerm_virtual_network.vnet.name
   resource_group_name 	            = azurerm_resource_group.rg.name
 }
@@ -96,9 +96,9 @@ resource "azurerm_virtual_machine" "vm-veeam" {
 ##### Marketplace image details again
 
 	plan {
-	name                              = "veeamoffice365backup"
-	publisher                         = "veeam"
-	product                           = "office365backup"
+	name                            = "veeamoffice365backup"
+	publisher                       = "veeam"
+	product                         = "office365backup"
   }
 	
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -134,8 +134,8 @@ resource "azurerm_virtual_machine" "vm-veeam" {
   }
   os_profile_windows_config {
     enable_automatic_upgrades 	    = true
-	provision_vm_agent 			          = true
-	timezone					                = "W. Europe Standard Time"
+	provision_vm_agent 			    = true
+	timezone					    = "W. Europe Standard Time"
   }
 }
 
@@ -200,10 +200,10 @@ resource "random_string" "password" {
 }
 
 resource "azuread_application_password" "client_secret" {
-  application_object_id 	          = azuread_application.veeamapp.id
-  value          			              = random_string.password.result
-  description           	          = "Veeam Secret"
-  end_date       			              = "2099-01-01T01:02:03Z"
+  application_object_id 	        = azuread_application.veeamapp.id
+  value          			        = random_string.password.result
+  description           	        = "Veeam Secret"
+  end_date       			        = "2099-01-01T01:02:03Z"
 }
 
 
