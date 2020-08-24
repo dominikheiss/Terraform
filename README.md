@@ -8,7 +8,9 @@
 
 3. terraform init
 
-4. terraform apply
+4. terraform plan
+
+5. terraform apply
 
 
 
@@ -29,13 +31,13 @@ terraform import azurerm_resource_group.rg /subscriptions/7e6721ba-af2a-43d0-a91
 
 ### To Remove a directory in Azure Cloud Shell && reclone the GIT Repo:
 
-cd ~ && rm -R -f  terraform-azure && git clone https://github.com/dominikheiss/Bechtle-Terraform.git
+cd ~ && rm -R -f  Bechtle-Terraform && git clone https://github.com/dominikheiss/Bechtle-Terraform.git
 
 
 
 ### To rejoin the last directory & init & apply
 
-cd Bechtle-Terraform/Templates/xxx && terraform init && terraform apply
+cd Bechtle-Terraform/Templates/xxx && terraform init && terraform plan && terraform apply
 
 
 
