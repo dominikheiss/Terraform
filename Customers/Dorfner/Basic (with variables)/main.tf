@@ -48,7 +48,7 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
 ##### Create a subnet for VPN Gateway
 
 resource "azurerm_subnet" "Gateway" {
-  name 					        = "Gateway" 
+  name 					        = "GatewaySubnet" 
   address_prefixes 		  		= ["10.10.255.0/24"]
   virtual_network_name 			= azurerm_virtual_network.vnet.name
   resource_group_name 			= azurerm_resource_group.rg.name
