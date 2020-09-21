@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                	            = "${var.prefix}-VNET1"
-  address_space 		            = ["10.100.0.0/16"]
+  address_space 		            = ["10.10.0.0/16"]
   resource_group_name 	            = azurerm_resource_group.rg.name
   location 				            = azurerm_resource_group.rg.location
   tags = {
@@ -30,7 +30,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 resource "azurerm_subnet" "Server" {
   name 					                    = "Server" 
-  address_prefixes 		              = ["10.100.1.0/24"]
+  address_prefixes 		              = ["10.10.1.0/24"]
   virtual_network_name 	            = azurerm_virtual_network.vnet.name
   resource_group_name 	            = azurerm_resource_group.rg.name
 }
@@ -39,7 +39,7 @@ resource "azurerm_subnet" "Server" {
 
 resource "azurerm_subnet" "WVD" {
   name 					                    = "WVD" 
-  address_prefixes 		              = ["10.100.10.0/24"]
+  address_prefixes 		              = ["10.10.10.0/24"]
   virtual_network_name 	            = azurerm_virtual_network.vnet.name
   resource_group_name 	            = azurerm_resource_group.rg.name
 }
@@ -48,7 +48,7 @@ resource "azurerm_subnet" "WVD" {
 
 resource "azurerm_subnet" "AzureBastionSubnet" {
   name 					            = "AzureBastionSubnet" 
-  address_prefixes 		            = ["10.100.254.0/24"]
+  address_prefixes 		            = ["10.10.254.0/24"]
   virtual_network_name 	            = azurerm_virtual_network.vnet.name
   resource_group_name 	            = azurerm_resource_group.rg.name
 }
@@ -56,8 +56,8 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
 ##### Create a subnet for VPN Gateway
 
 resource "azurerm_subnet" "Gateway" {
-  name 					            = "Gateway" 
-  address_prefixes 		            = ["10.100.255.0/24"]
+  name 					            = "GatewaySubnet" 
+  address_prefixes 		            = ["10.10.255.0/24"]
   virtual_network_name 	            = azurerm_virtual_network.vnet.name
   resource_group_name 	            = azurerm_resource_group.rg.name
 }
