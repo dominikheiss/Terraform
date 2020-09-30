@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rg" {
 ##### Create the VNET
 
 resource "azurerm_virtual_network" "vnet" {
-  name                			= "${var.prefix}-VNET"
+  name                			= "${var.prefix}-VNET1"
   address_space 		    	= ["10.100.0.0/16"]
   resource_group_name 			= azurerm_resource_group.rg.name
   location 				     	= azurerm_resource_group.rg.location
