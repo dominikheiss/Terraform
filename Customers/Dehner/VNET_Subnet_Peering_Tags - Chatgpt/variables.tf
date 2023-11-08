@@ -14,7 +14,7 @@ variable "resource_group_name" {
 
 variable "vnet_name" {
   description = "Name of the VNet"
-  default = "vnet-backup"
+  default = "backup"
 }
 
 variable "address_space" {
@@ -35,13 +35,13 @@ variable "hub_vnet_name" {
 
 variable "subnets" {
   description = "Map of subnets with properties"
-   type = map(object({
+  type = map(object({
     address_prefixes = list(string)
     // Weitere Subnetz-Eigenschaften können hier hinzugefügt werden
   }))
   default = {
     "snet-backup" = {
-      address_prefixes = var.address_space
+      address_prefixes = ["10.180.24.0/24"]
       // Setzen Sie weitere Standardwerte für zusätzliche Eigenschaften hier
     }
     // Fügen Sie weitere Subnetze nach Bedarf hinzu
