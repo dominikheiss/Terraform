@@ -13,11 +13,10 @@ resource "azurerm_virtual_network" "spoke_vnet" {
 }
 
 resource "azurerm_subnet" "spoke_subnet" {
-  for_each             = var.subnets
-  name                 = each.key
+  name                 = "snet-${var.vnet_name}"
   resource_group_name  = azurerm_resource_group.spoke.name
   virtual_network_name = azurerm_virtual_network.spoke_vnet.name
-  address_prefixes     = each.value.address_prefixes
+  address_prefixes     = var.address_space
 }
 
 resource "azurerm_route_table" "spoke_rt" {
@@ -37,7 +36,7 @@ resource "azurerm_route_table" "spoke_rt" {
 resource "azurerm_subnet_route_table_association" "spoke_rta" {
   for_each = var.subnets
 
-  subnet_id      = azurerm_subnet.spoke_subnet[each.key].id
+  subnet_id      = azurerm_subnet.spoke_subnets[each.key].id
   route_table_id = azurerm_route_table.spoke_rt.id
 }
 
@@ -45,7 +44,7 @@ resource "azurerm_virtual_network_peering" "spoke_to_hub" {
   name                      = var.peering_spoke_to_hub_name
   resource_group_name       = azurerm_resource_group.spoke.name
   virtual_network_name      = azurerm_virtual_network.spoke_vnet.name
-  remote_virtual_network_id = var.hub_vnet_id // Verwenden Sie die ID des Hub VNet aus der Variable
+  remote_virtual_network_id = azurerm_virtual_network.hub.id // Stellen Sie sicher, dass Sie die richtige ID des Hub VNet haben.
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
   allow_gateway_transit        = true
@@ -53,10 +52,11 @@ resource "azurerm_virtual_network_peering" "spoke_to_hub" {
 
 resource "azurerm_virtual_network_peering" "hub_to_spoke" {
   name                      = var.peering_hub_to_spoke_name
-  resource_group_name       = var.hub_resource_group_name
+  resource_group_name       = var.hub_resource_group_name		//"rg-network" Ersetzen Sie dies mit dem tatsächlichen Namen der Ressourcengruppe des Hub VNet.
   virtual_network_name      = var.hub_vnet_name
   remote_virtual_network_id = azurerm_virtual_network.spoke_vnet.id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
-  use_remote_gateways          = false
+  use_remote_gateways          = false // Standardmäßig auf false, da es nur gesetzt wird, wenn Sie die VPN-Gateway des Spoke verwenden möchten.
+
 }

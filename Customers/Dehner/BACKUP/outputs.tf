@@ -3,7 +3,7 @@ output "spoke_vnet_id" {
 }
 
 output "spoke_subnet_ids" {
-  value = { for s in azurerm_subnet.spoke_subnet : s.name => s.id }
+  value = { for s in azurerm_subnet.spoke_subnets : s.name => s.id }
 }
 
 output "spoke_route_table_id" {
