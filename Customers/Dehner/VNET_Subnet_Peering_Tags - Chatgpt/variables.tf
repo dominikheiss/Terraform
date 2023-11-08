@@ -38,8 +38,15 @@ variable "subnets" {
   default = "snet-backup"
   type = map(object({
     address_prefixes = list(string)
-    service_endpoints = list(string)
+    // Weitere Subnetz-Eigenschaften können hier hinzugefügt werden
   }))
+  default = {
+    "snet-backup" = {
+      address_prefixes = var.address_space
+      // Setzen Sie weitere Standardwerte für zusätzliche Eigenschaften hier
+    }
+    // Fügen Sie weitere Subnetze nach Bedarf hinzu
+  }
 }
 
 variable "routing_table_name" {
