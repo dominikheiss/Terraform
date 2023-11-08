@@ -35,8 +35,7 @@ variable "hub_vnet_name" {
 
 variable "subnets" {
   description = "Map of subnets with properties"
-  default = "snet-backup"
-  type = map(object({
+   type = map(object({
     address_prefixes = list(string)
     // Weitere Subnetz-Eigenschaften können hier hinzugefügt werden
   }))
