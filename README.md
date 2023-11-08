@@ -1,10 +1,10 @@
-# Bechtle-Terraform for Azure/o365
+# Terraform for Azure/o365
 
 ==> Azure Cloud Shell
 
-1. git clone https://github.com/dominikheiss/Bechtle-Terraform.git
+1. git clone https://github.com/dominikheiss/Terraform.git
 
-2. cd Bechtle-Terraform/Templates/xxx
+2. cd Terraform/Templates/xxx
 
 3. terraform init
 
@@ -31,13 +31,13 @@ terraform import azurerm_resource_group.rg /subscriptions/7e6721ba-af2a-43d0-a91
 
 ### To Remove a directory in Azure Cloud Shell && reclone the GIT Repo:
 
-cd ~ && rm -R -f  Bechtle-Terraform && git clone https://github.com/dominikheiss/Bechtle-Terraform.git
+cd ~ && rm -R -f  Terraform && git clone https://github.com/dominikheiss/Terraform.git
 
 
 
 ### To rejoin the last directory & init & apply
 
-cd Bechtle-Terraform/Templates/xxx && terraform init && terraform plan && terraform apply
+cd Terraform/Templates/xxx && terraform init && terraform plan && terraform apply
 
 
 
