@@ -5,7 +5,7 @@ variable "location" {
 
 variable "subscription_id" {
   description = "Definition of proper Subscription ID"
-  default     = "08070a81-7b5c-4b3e-b50a-c43c8047e8f9"
+  default     = "f96bb086-c28f-40a3-88a8-89de63160a72"
 }
 
 variable "resource_group_name" {
