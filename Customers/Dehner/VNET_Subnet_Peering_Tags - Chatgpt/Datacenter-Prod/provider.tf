@@ -1,6 +1,6 @@
 provider "azurerm" {
   features {}
-  alias = "current"
+  alias = "spoke"
   subscription_id = var.subscription_id
 }
 
