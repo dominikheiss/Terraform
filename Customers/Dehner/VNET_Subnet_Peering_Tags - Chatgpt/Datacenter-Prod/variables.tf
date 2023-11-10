@@ -5,7 +5,7 @@ variable "subscription_id" {
 
 variable "hub_subscription_id" {
   description = "Definition of HUB Subscription ID"
-  default     = "f96bb086-c28f-40a3-88a8-89de63160a72"
+  default     = "e635aa2a-2f4a-432e-8d5a-07f9ddce0808"
 }
 
 variable "vnet_name" {
