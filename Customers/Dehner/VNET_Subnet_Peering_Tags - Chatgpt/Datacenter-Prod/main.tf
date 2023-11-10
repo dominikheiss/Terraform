@@ -5,6 +5,7 @@ resource "azurerm_resource_group" "spoke" {
 }
 
 resource "azurerm_virtual_network" "spoke_vnet" {
+  provider = azurerm.current
   name                = "vnet-${var.vnet_name}"
   address_space       = var.address_space
   location            = var.location
@@ -42,6 +43,7 @@ resource "azurerm_subnet_route_table_association" "spoke_rta" {
 }
 
 resource "azurerm_virtual_network_peering" "spoke_to_hub" {
+  provider = azurerm.hub
   name                      = var.peering_spoke_to_hub_name
   resource_group_name       = azurerm_resource_group.spoke.name
   virtual_network_name      = azurerm_virtual_network.spoke_vnet.name
@@ -52,6 +54,7 @@ resource "azurerm_virtual_network_peering" "spoke_to_hub" {
 }
 
 resource "azurerm_virtual_network_peering" "hub_to_spoke" {
+  provider = azurerm.hub
   name                      = var.peering_hub_to_spoke_name
   resource_group_name       = var.hub_resource_group_name
   virtual_network_name      = var.hub_vnet_name

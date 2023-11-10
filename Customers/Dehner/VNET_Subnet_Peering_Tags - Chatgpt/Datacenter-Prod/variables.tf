@@ -8,6 +8,12 @@ variable "subscription_id" {
   default     = "f96bb086-c28f-40a3-88a8-89de63160a72"
 }
 
+variable "hub_subscription_id" {
+  description = "Definition of HUB Subscription ID"
+  default     = "f96bb086-c28f-40a3-88a8-89de63160a72"
+}
+
+
 variable "resource_group_name" {
   description = "Name of the resource group"
   default = "rg-network"
