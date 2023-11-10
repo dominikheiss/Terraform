@@ -51,7 +51,7 @@ resource "azurerm_virtual_network_peering" "spoke_to_hub" {
   name                      = "peer-${var.vnet_name}-hub"
   resource_group_name       = azurerm_resource_group.spoke.name
   virtual_network_name      = azurerm_virtual_network.spoke_vnet.name
-  remote_virtual_network_id = var.hub_vnet_id // Verwenden Sie die ID des Hub VNet aus der Variable
+  remote_virtual_network_id = var.hub_vnet_id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
   allow_gateway_transit        = true
@@ -67,3 +67,64 @@ resource "azurerm_virtual_network_peering" "hub_to_spoke" {
   allow_forwarded_traffic      = true
   use_remote_gateways          = false
 }
+
+# -----> LOCKS against accidental deletion <-----
+
+# Lock für die Ressourcengruppe im Spoke
+resource "azurerm_management_lock" "spoke_rg_lock" {
+  provider   = azurerm.spoke
+  name       = "prevent-delete-spoke-rg"
+  scope      = azurerm_resource_group.spoke.id
+  lock_level = "CanNotDelete"
+}
+
+# Lock für das Spoke VNet
+resource "azurerm_management_lock" "spoke_vnet_lock" {
+  provider   = azurerm.spoke
+  name       = "prevent-delete-spoke-vnet"
+  scope      = azurerm_virtual_network.spoke_vnet.id
+  lock_level = "CanNotDelete"
+}
+
+# Lock für jedes Subnet im Spoke VNet
+resource "azurerm_management_lock" "spoke_subnet_lock" {
+  for_each   = azurerm_subnet.spoke_subnet
+  provider   = azurerm.spoke
+
+  name       = "prevent-delete-${each.value.name}"
+  scope      = each.value.id
+  lock_level = "CanNotDelete"
+}
+
+# Lock für die Route Table
+resource "azurerm_management_lock" "spoke_rt_lock" {
+  provider   = azurerm.spoke
+  name       = "prevent-delete-spoke-rt"
+  scope      = azurerm_route_table.spoke_rt.id
+  lock_level = "CanNotDelete"
+}
+
+# Lock für die VNet Peering von Spoke zu Hub
+resource "azurerm_management_lock" "spoke_to_hub_peering_lock" {
+  provider   = azurerm.spoke
+  name       = "prevent-delete-spoke-to-hub-peering"
+  scope      = azurerm_virtual_network_peering.spoke_to_hub.id
+  lock_level = "CanNotDelete"
+}
+
+# Lock für die VNet Peering von Hub zu Spoke (Beachten Sie den anderen Provider, wenn es in einer anderen Subscription ist)
+resource "azurerm_management_lock" "hub_to_spoke_peering_lock" {
+  provider   = azurerm.hub
+  name       = "prevent-delete-hub-to-spoke-peering"
+  scope      = azurerm_virtual_network_peering.hub_to_spoke.id
+  lock_level = "CanNotDelete"
+}
+
+/* Lock für das Hub VNet (Beachten Sie den anderen Provider, wenn es in einer anderen Subscription ist)
+resource "azurerm_management_lock" "hub_vnet_lock" {
+  provider   = azurerm.hub
+  name       = "prevent-delete-hub-vnet"
+  scope      = var.hub_vnet_id
+  lock_level = "CanNotDelete"
+}
+*/
